@@ -1,18 +1,19 @@
 package com.uepb.DesafioKnex.model;
 
-import com.uepb.DesafioKnex.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "users")
+@Table(name = "products")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,14 +22,17 @@ public class User {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, unique = true, length = 150)
-    private String email;
+    @Column(nullable = false, length = 1000)
+    private String description;
 
-    @Column(name = "password", nullable = false, length = 64)
-    private String hashPassword;
+    @Column(nullable = false)
+    private BigDecimal price;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @Column(nullable = false)
+    private Integer stockQuantity;
+
+    @Column(nullable = false)
+    private Boolean alreadySold;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;

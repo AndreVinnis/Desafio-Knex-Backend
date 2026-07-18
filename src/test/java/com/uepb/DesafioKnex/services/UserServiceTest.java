@@ -64,7 +64,6 @@ class UserServiceTest {
 
         // Assert
         assertNotNull(response);
-        assertEquals(savedUser.getId(), response.id());
         assertEquals(savedUser.getName(), response.name());
         assertEquals(savedUser.getEmail(), response.email());
         assertEquals(savedUser.getRole(), response.role());

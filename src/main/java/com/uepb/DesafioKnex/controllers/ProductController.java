@@ -36,7 +36,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('SELLER')")
-    public ResponseEntity<ProductResponse> deleteProduct(@RequestBody ProductRequest request, @PathVariable Long id){
+    public ResponseEntity<ProductResponse> updateProduct(@RequestBody ProductRequest request, @PathVariable Long id){
         return ResponseEntity.ok(productService.update(request, id));
     }
 

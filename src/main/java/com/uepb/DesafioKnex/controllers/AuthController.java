@@ -30,7 +30,7 @@ public class AuthController {
     private JwtService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<UserResponse> register(@RequestBody UserRequest userRequest) {
         UserResponse user = userService.create(userRequest);
         return ResponseEntity.ok(user);
     }

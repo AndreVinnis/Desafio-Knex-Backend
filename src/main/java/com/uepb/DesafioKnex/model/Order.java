@@ -1,5 +1,6 @@
 package com.uepb.DesafioKnex.model;
 
+import com.uepb.DesafioKnex.model.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -26,6 +27,10 @@ public class Order {
 
     @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PaymentMethod paymentMethod;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;

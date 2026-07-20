@@ -37,6 +37,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    private Cart cart;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 

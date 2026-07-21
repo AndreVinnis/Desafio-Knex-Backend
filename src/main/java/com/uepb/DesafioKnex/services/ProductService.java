@@ -3,6 +3,7 @@ package com.uepb.DesafioKnex.services;
 import com.uepb.DesafioKnex.dto.request.ProductRequest;
 import com.uepb.DesafioKnex.dto.response.ProductResponse;
 import com.uepb.DesafioKnex.exceptions.EmptyList;
+import com.uepb.DesafioKnex.exceptions.InsufficientStockException;
 import com.uepb.DesafioKnex.exceptions.ProductAlreadySold;
 import com.uepb.DesafioKnex.exceptions.ProductNotFound;
 import com.uepb.DesafioKnex.model.Product;
@@ -87,6 +88,20 @@ public class ProductService {
             throw new ProductAlreadySold(defaultMessage);
         }
         productRepository.delete(product);
+    }
+
+    @Transactional
+    public void decrementsStockByPurchase(Product product, Integer quantity){
+        if(product.getStockQuantity() < quantity){
+            throw new InsufficientStockException(
+                    "Estoque insuficiente para o produto " + product.getId() + ". Disponível: " + product.getStockQuantity()
+            );
+        }
+        if(!product.getAlreadySold()){
+            product.setAlreadySold(true);
+        }
+        product.setStockQuantity(product.getStockQuantity() - quantity);
+        productRepository.save(product);
     }
 
     private ProductResponse toResponse(Product product){

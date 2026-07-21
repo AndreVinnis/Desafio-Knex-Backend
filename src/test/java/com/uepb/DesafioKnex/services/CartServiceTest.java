@@ -3,7 +3,7 @@ package com.uepb.DesafioKnex.services;
 import com.uepb.DesafioKnex.dto.request.AddToCartRequest;
 import com.uepb.DesafioKnex.dto.request.UpdateCartItemRequest;
 import com.uepb.DesafioKnex.dto.response.CartResponse;
-import com.uepb.DesafioKnex.exceptions.CartItemNotFoundException;
+import com.uepb.DesafioKnex.exceptions.CartItemNotFound;
 import com.uepb.DesafioKnex.exceptions.InsufficientStockException;
 import com.uepb.DesafioKnex.model.Cart;
 import com.uepb.DesafioKnex.model.CartItem;
@@ -176,7 +176,7 @@ class CartServiceTest {
         when(cartRepository.findByClientId(user.getId())).thenReturn(Optional.of(cart));
         when(cartItemRepository.findByCart_IdAndProduct_Id(cart.getId(), product.getId())).thenReturn(Optional.empty());
 
-        assertThrows(CartItemNotFoundException.class, () -> cartService.updateItemQuantity(user, product.getId(), request));
+        assertThrows(CartItemNotFound.class, () -> cartService.updateItemQuantity(user, product.getId(), request));
     }
 
     @Test

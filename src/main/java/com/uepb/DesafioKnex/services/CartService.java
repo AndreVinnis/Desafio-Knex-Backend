@@ -4,7 +4,7 @@ import com.uepb.DesafioKnex.dto.request.AddToCartRequest;
 import com.uepb.DesafioKnex.dto.request.UpdateCartItemRequest;
 import com.uepb.DesafioKnex.dto.response.CartItemResponse;
 import com.uepb.DesafioKnex.dto.response.CartResponse;
-import com.uepb.DesafioKnex.exceptions.CartItemNotFoundException;
+import com.uepb.DesafioKnex.exceptions.CartItemNotFound;
 import com.uepb.DesafioKnex.exceptions.InsufficientStockException;
 import com.uepb.DesafioKnex.model.Cart;
 import com.uepb.DesafioKnex.model.CartItem;
@@ -74,7 +74,7 @@ public class CartService {
 
         Cart cart = getOrCreateCart(user);
         CartItem item = cartItemRepository.findByCart_IdAndProduct_Id(cart.getId(), productId)
-                .orElseThrow(() -> new CartItemNotFoundException(productId));
+                .orElseThrow(() -> new CartItemNotFound(productId));
 
         Product product = productService.getProductById(productId);
         assertStock(product, request.quantity());
@@ -89,7 +89,7 @@ public class CartService {
         Cart cart = getOrCreateCart(user);
 
         CartItem item = cartItemRepository.findByCart_IdAndProduct_Id(cart.getId(), productId)
-                .orElseThrow(() -> new CartItemNotFoundException(productId));
+                .orElseThrow(() -> new CartItemNotFound(productId));
 
         cart.getItems().remove(item);
         cartRepository.save(cart);
